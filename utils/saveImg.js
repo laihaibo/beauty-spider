@@ -3,10 +3,14 @@ const mkdirp = require('mkdirp');
 const request = require('superagent');
 require('superagent-charset')(request);
 
+const config = require('../config');
+
+let {currentImgType} = config;
+
 // 保存一张图片
 let saveOne = (title, url, fileName) => {
   return new Promise((resolve, reject) => {
-    let path = `./img/${title}/${fileName}`;
+    let path = `./img/${currentImgType}/${title}/${fileName}`;
     let isExit = fs.existsSync(path);
     if (!isExit) {
       request.get(url).set({
@@ -35,7 +39,7 @@ function saveImg({
   imgList
 }) {
 
-  mkdirp(`./img/${title}`, function (err) {
+  mkdirp(`./img/${currentImgType}/${title}`, function (err) {
     if (err) {
       console.log(`Error: ${err} in makedir ${title}`);
     }
