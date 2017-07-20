@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "download": "node download.js",
-    "sum": "node utils/count.js"
+    "sum": "node test.js"
   },
   "keywords": [
     "spider",
@@ -18,7 +18,6 @@
   "author": "laihaibo",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.5.0",
     "cheerio": "^1.0.0-rc.2",
     "mkdirp": "^0.5.1",
     "superagent": "^3.5.2",

@@ -1,9 +1,6 @@
 const fs = require('fs');
-
-const saveImg = require('./utils/saveImg');
 const getConfig = require('./config');
 let config = getConfig();
-
 let {
   currentImgType,
   allImgType
@@ -13,10 +10,6 @@ let path = `./data/${currentImgType}.json`;
 
 let data = JSON.parse(fs.readFileSync(path));
 
-console.time('download imgs...')
-for (let value of data) {
-  saveImg(value)
-}
-console.timeEnd('download imgs...')
+let count = data.reduce((prev, cur) => prev + cur.imgList.length, 0);
 
-// console.log(fs.existsSync('./config.js'));
+console.log(count);

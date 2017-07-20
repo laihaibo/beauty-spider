@@ -8,10 +8,12 @@ const request = require('superagent');
 require('superagent-charset')(request);
 
 const saveData = require('./utils/saveData');
-const downloadImg = require('./utils/downloadImg');
-const  config = require('./config');
-
-let {currentImgType,allImgType} = config;
+const getConfig = require('./config');
+let config = getConfig();
+let {
+  currentImgType,
+  allImgType
+} = config;
 
 
 // 获取指定url的html内容，该网站编码为utf-8
@@ -35,10 +37,19 @@ const getAlbums = (startUrl) => {
       try {
         let $ = await getHtml(startUrl);
         let pages = $('#listdiv .pagesYY a').length;
-        for (let i = 1; i < pages; i++) {
+        // let pages = 20;
+        for (let i = 1; i <= pages; i++) { // <=在只有一页时可以用
           let pageUrl = `${startUrl + i}.html`
           let $ = await getHtml(pageUrl);
+
+          let mmm = $('#listdiv .pagesYY a').map(function (i, el) {
+            return parseInt($(this).text(), 0);
+          }).get().filter(x => x > 0);
+          pages = mmm.length < 2 ? pages : mmm.reduce((prev, cur) => Math.max(prev, cur));
+          // console.log(pages);
+
           $('.galleryli_title a').each(function () {
+            // console.log(this);
             albums.push({
               title: $(this).text(),
               url: `https://www.nvshens.com${$(this).attr("href")}`,
@@ -48,6 +59,7 @@ const getAlbums = (startUrl) => {
           })
         }
         resolve(albums);
+        // console.log(albums);
       } catch (error) {
         console.log(error);
       }
@@ -65,7 +77,7 @@ const getImgList = (startUrl) => {
       try {
         let $ = await getHtml(startUrl);
         let pages = $('#pages a').length;
-        for (let i = 1; i < pages; i++) {
+        for (let i = 1; i <= pages; i++) {
           let pageUrl = `${startUrl + i}.html`
           let $ = await getHtml(pageUrl);
           $('#hgallery img').each(function () {

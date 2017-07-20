@@ -3,9 +3,12 @@ const mkdirp = require('mkdirp');
 const request = require('superagent');
 require('superagent-charset')(request);
 
-const config = require('../config');
-
-let {currentImgType} = config;
+const getConfig = require('../config');
+let config = getConfig();
+let {
+  currentImgType,
+  allImgType
+} = config;
 
 // 保存一张图片
 let saveOne = (title, url, fileName) => {
