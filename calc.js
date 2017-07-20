@@ -12,4 +12,4 @@ let data = JSON.parse(fs.readFileSync(path));
 
 let count = data.reduce((prev, cur) => prev + cur.imgList.length, 0);
 
-console.log(count);
+console.log(`共${data.length}个相册，共${count}张图片`);
