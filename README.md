@@ -8,7 +8,7 @@
 ## usage
 ```
 0. node -v >= 7.6
-1. git clone https://github.com/laihaibo/zngirls-spider.git
+1. git clone https://github.com/laihaibo/beauty-spider.git
 2. npm i
 3. npm run start (爬取相册图片链接，并保存为json)
 4. npm run calc (获取爬取的相册数和文件数)
